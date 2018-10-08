@@ -49,6 +49,9 @@ class Stack(object):
             self.items.remove_last()
             return last
 
+    def __str__(self):
+        return str(self.items)
+
 class StackOfStacks(object):
 
     def __init__(self, capacity):
@@ -62,7 +65,7 @@ class StackOfStacks(object):
             self.stacks.append(Stack())
             self.cur_size = 0
 
-        self.stacks.head.push(value)
+        self.stacks.head.value.push(value)
         self.cur_size += 1
 
     def pop(self):
@@ -74,4 +77,30 @@ class StackOfStacks(object):
             else:
                 self.cur_size = self.capacity
         self.cur_size -= 1
-        return self.stacks.head.pop()
+        return self.stacks.head.value.pop()
+
+    def __str__(self):
+        node = self.stacks.head
+        if node==None: return None
+
+        output = []
+        i = 1
+        while (node != None):
+            output.append("---Stack "+str(i)+"---")
+            output.append(str(node.value))
+            output.append("--------------")
+            node = node.next
+            i += 1
+        return "\n".join(output)
+
+S = StackOfStacks(capacity = 3)
+input = list(range(1,11))
+for i in input:
+    S.push(i)
+    print("After pushing: ",i)
+    print(S)
+
+
+for i in input:
+    print("After popping: ", S.pop())
+    print(S)
